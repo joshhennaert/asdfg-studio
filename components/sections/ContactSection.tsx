@@ -1,0 +1,182 @@
+'use client'
+
+import { useState } from 'react'
+import { motion } from 'motion/react'
+import { ClipReveal } from '@/components/ui/ClipReveal'
+import { DrawLine } from '@/components/ui/DrawLine'
+
+const HEADING_FONT = '"Neue Haas Unica", "Helvetica Neue", Arial, sans-serif'
+const BODY_FONT    = '"EB Garamond", Garamond, Georgia, serif'
+
+export default function ContactSection() {
+  const [sent, setSent] = useState(false)
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [form, setForm] = useState({ name: '', email: '', service: '', message: '' })
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError(false)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (!res.ok) throw new Error()
+      setSent(true)
+    } catch {
+      setError(true)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <section id="contact" className="py-16 md:py-40 bg-bg">
+      <div className="mx-auto px-6 md:px-12" style={{ maxWidth: 1200 }}>
+
+      <div className="mb-16">
+        <DrawLine />
+        <div className="pt-6">
+          <ClipReveal>
+            <h2 className="text-fg leading-tight" style={{ fontFamily: HEADING_FONT, fontWeight: 900, fontSize: 'clamp(22px, 3vw, 40px)', letterSpacing: '-0.02em' }}>
+              Start a conversation
+            </h2>
+          </ClipReveal>
+        </div>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-10 md:gap-24">
+
+        {/* Left — info */}
+        <div className="space-y-10">
+          <p className="text-fg/60 leading-relaxed" style={{ fontFamily: BODY_FONT, fontSize: '18px' }}>
+            No pitch decks. Tell us what you&apos;re working on. We&apos;ll be honest
+            about whether we&apos;re the right fit.
+          </p>
+
+          <div>
+            <a
+              href="mailto:hello@asdfg.studio"
+              className="text-fg hover:opacity-50 transition-opacity duration-150"
+              style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: 'clamp(20px, 2vw, 30px)' }}
+            >
+              hello@asdfg.studio
+            </a>
+          </div>
+
+          <div className="pt-6 border-t border-fg/10">
+            <p className="text-fg/50" style={{ fontFamily: BODY_FONT, fontSize: '18px' }}>
+              We aim to get back to you within one business day.
+            </p>
+          </div>
+        </div>
+
+        {/* Right — form */}
+        {sent ? (
+          <motion.div className="flex items-start pt-2" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <div>
+              <h3 className="text-fg mb-2" style={{ fontFamily: HEADING_FONT, fontWeight: 700, fontSize: '32px' }}>
+                Thank you.
+              </h3>
+              <p className="text-fg/50" style={{ fontFamily: BODY_FONT, fontSize: '18px' }}>
+                We&apos;ll be in touch within one business day.
+              </p>
+            </div>
+          </motion.div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-8">
+            {[
+              { k: 'name',  label: 'Name',  type: 'text',  ph: 'Your name',           autocomplete: 'name'  },
+              { k: 'email', label: 'Email', type: 'email', ph: 'hello@yourbrand.com',  autocomplete: 'email' },
+            ].map(f => (
+              <div key={f.k}>
+                <label
+                  htmlFor={`field-${f.k}`}
+                  className="font-fragment text-fg/60 block mb-2"
+                  style={{ fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase' }}
+                >
+                  {f.label}
+                </label>
+                <input
+                  id={`field-${f.k}`}
+                  type={f.type}
+                  required
+                  autoComplete={f.autocomplete}
+                  value={form[f.k as 'name' | 'email']}
+                  onChange={e => setForm(p => ({ ...p, [f.k]: e.target.value }))}
+                  placeholder={f.ph}
+                  className="w-full bg-transparent pb-3 text-fg focus:outline-none placeholder:text-fg/35 border-b border-fg/20 focus:border-fg/60 transition-colors duration-150"
+                  style={{ fontFamily: BODY_FONT, fontSize: '18px' }}
+                />
+              </div>
+            ))}
+            <div>
+              <label htmlFor="field-service" className="font-fragment text-fg/60 block mb-2" style={{ fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                I&apos;m interested in
+              </label>
+              <select
+                id="field-service"
+                required
+                value={form.service}
+                onChange={e => setForm(p => ({ ...p, service: e.target.value }))}
+                className="w-full bg-transparent pb-3 text-fg focus:outline-none border-b border-fg/20 focus:border-fg/60 transition-colors duration-150 appearance-none cursor-pointer"
+                style={{ fontFamily: BODY_FONT, fontSize: '18px', color: form.service ? 'var(--fg)' : 'rgba(243,236,230,0.25)' }}
+              >
+                <option value="" disabled style={{ background: '#1C1C1C', color: '#F3ECE6' }}>Select a service</option>
+                <option value="ux-audit"       style={{ background: '#1C1C1C', color: '#F3ECE6' }}>UX &amp; Conversion Audit</option>
+                <option value="store-build"    style={{ background: '#1C1C1C', color: '#F3ECE6' }}>Store Design &amp; Build</option>
+                <option value="brand-strategy" style={{ background: '#1C1C1C', color: '#F3ECE6' }}>Brand Strategy</option>
+                <option value="tcg-build"      style={{ background: '#1C1C1C', color: '#F3ECE6' }}>TCG Website Build</option>
+                <option value="retainer"       style={{ background: '#1C1C1C', color: '#F3ECE6' }}>Monthly Retainer</option>
+                <option value="general"        style={{ background: '#1C1C1C', color: '#F3ECE6' }}>General Enquiry</option>
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="field-message" className="font-fragment text-fg/60 block mb-2" style={{ fontSize: '13px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                What are you building?
+              </label>
+              <textarea
+                id="field-message"
+                required
+                rows={3}
+                value={form.message}
+                onChange={e => setForm(p => ({ ...p, message: e.target.value }))}
+                placeholder="Tell us about your brand and what you need."
+                className="w-full bg-transparent pb-3 text-fg focus:outline-none placeholder:text-fg/35 border-b border-fg/20 focus:border-fg/60 transition-colors duration-150 resize-none"
+                style={{ fontFamily: BODY_FONT, fontSize: '18px' }}
+              />
+            </div>
+            {error && (
+              <p style={{ fontFamily: BODY_FONT, fontSize: '15px', color: '#BE185D' }}>
+                Something went wrong. Please try again or email us directly.
+              </p>
+            )}
+            <button type="submit" disabled={loading} className="btn-pill w-full justify-center" style={{
+              background: '#F3ECE6',
+              color: '#1C1C1C',
+              borderColor: '#1C1C1C',
+            }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = '#BE185D'
+                e.currentTarget.style.color = '#F3ECE6'
+                e.currentTarget.style.borderColor = '#BE185D'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = '#F3ECE6'
+                e.currentTarget.style.color = '#1C1C1C'
+                e.currentTarget.style.borderColor = '#1C1C1C'
+              }}
+            >
+              {loading ? 'Sending…' : 'Send message →'}
+            </button>
+          </form>
+        )}
+      </div>
+      </div>
+    </section>
+  )
+}
