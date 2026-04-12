@@ -2,10 +2,20 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, service, message } = await req.json()
+    const { name, email, service, message, token } = await req.json()
 
-    if (!name || !email || !service || !message) {
+    if (!name || !email || !service || !message || !token) {
       return NextResponse.json({ error: 'Missing fields' }, { status: 400 })
+    }
+
+    const verify = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ secret: process.env.TURNSTILE_SECRET_KEY, response: token }),
+    })
+    const verifyData = await verify.json()
+    if (!verifyData.success) {
+      return NextResponse.json({ error: 'Spam check failed' }, { status: 403 })
     }
 
     const res = await fetch('https://api.resend.com/emails', {

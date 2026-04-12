@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { motion } from 'motion/react'
+import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile'
 import { ClipReveal } from '@/components/ui/ClipReveal'
 import { DrawLine } from '@/components/ui/DrawLine'
 
@@ -13,7 +14,9 @@ export default function ContactSection() {
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
   const [emailError, setEmailError] = useState('')
+  const [token, setToken] = useState<string | null>(null)
   const [form, setForm] = useState({ name: '', email: '', service: '', message: '' })
+  const turnstileRef = useRef<TurnstileInstance>(null)
 
   const isValidEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())
@@ -32,18 +35,21 @@ export default function ContactSection() {
       setEmailError('Please enter a valid email address.')
       return
     }
+    if (!token) return
     setLoading(true)
     setError(false)
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, token }),
       })
       if (!res.ok) throw new Error()
       setSent(true)
     } catch {
       setError(true)
+      turnstileRef.current?.reset()
+      setToken(null)
     } finally {
       setLoading(false)
     }
@@ -170,12 +176,19 @@ export default function ContactSection() {
                 style={{ fontFamily: BODY_FONT, fontSize: '18px' }}
               />
             </div>
+            <Turnstile
+              ref={turnstileRef}
+              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+              onSuccess={setToken}
+              onExpire={() => setToken(null)}
+              options={{ theme: 'dark' }}
+            />
             {error && (
               <p style={{ fontFamily: BODY_FONT, fontSize: '15px', color: '#BE185D' }}>
                 Something went wrong. Please try again or email us directly.
               </p>
             )}
-            <button type="submit" disabled={loading} className="btn-pill w-full justify-center" style={{
+            <button type="submit" disabled={loading || !token} className="btn-pill w-full justify-center" style={{
               background: '#F3ECE6',
               color: '#1C1C1C',
               borderColor: '#1C1C1C',
