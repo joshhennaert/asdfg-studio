@@ -12,10 +12,26 @@ export default function ContactSection() {
   const [sent, setSent] = useState(false)
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [emailError, setEmailError] = useState('')
   const [form, setForm] = useState({ name: '', email: '', service: '', message: '' })
+
+  const isValidEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())
+
+  const handleEmailBlur = () => {
+    if (form.email && !isValidEmail(form.email)) {
+      setEmailError('Please enter a valid email address.')
+    } else {
+      setEmailError('')
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!isValidEmail(form.email)) {
+      setEmailError('Please enter a valid email address.')
+      return
+    }
     setLoading(true)
     setError(false)
     try {
@@ -106,11 +122,15 @@ export default function ContactSection() {
                   required
                   autoComplete={f.autocomplete}
                   value={form[f.k as 'name' | 'email']}
-                  onChange={e => setForm(p => ({ ...p, [f.k]: e.target.value }))}
+                  onChange={e => { setForm(p => ({ ...p, [f.k]: e.target.value })); if (f.k === 'email') setEmailError('') }}
+                  onBlur={f.k === 'email' ? handleEmailBlur : undefined}
                   placeholder={f.ph}
                   className="w-full bg-transparent pb-3 text-fg focus:outline-none placeholder:text-fg/35 border-b border-fg/20 focus:border-fg/60 transition-colors duration-150"
-                  style={{ fontFamily: BODY_FONT, fontSize: '18px' }}
+                  style={{ fontFamily: BODY_FONT, fontSize: '18px', borderBottomColor: f.k === 'email' && emailError ? '#BE185D' : undefined }}
                 />
+                {f.k === 'email' && emailError && (
+                  <p style={{ fontFamily: BODY_FONT, fontSize: '14px', color: '#BE185D', marginTop: 6 }}>{emailError}</p>
+                )}
               </div>
             ))}
             <div>
