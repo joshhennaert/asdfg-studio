@@ -25,13 +25,11 @@ export const metadata: Metadata = {
     siteName: 'asdfg.studio',
     locale: 'en_GB',
     type: 'website',
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'asdfg.studio' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'asdfg.studio — Ecommerce Design for Brands That Convert',
     description: 'Ecommerce stores built for brands that take their product seriously.',
-    images: ['/og-image.jpg'],
   },
   robots: {
     index: true,

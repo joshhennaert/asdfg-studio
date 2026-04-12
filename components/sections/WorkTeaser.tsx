@@ -15,25 +15,25 @@ const PROJECTS = [
   {
     title:    'Sable',
     category: 'Luxury Skincare',
-    image:    'https://picsum.photos/seed/sable-dark/800/600',
+    image:    '/work/sable.jpg',
     colour:   '#004225',
   },
   {
     title:    'Meridian',
     category: 'Streetwear',
-    image:    'https://picsum.photos/seed/meridian-arch/800/600',
+    image:    '/work/meridian.jpg',
     colour:   '#1D4ED8',
   },
   {
     title:    'Flora & Co',
     category: 'Sustainable Fashion',
-    image:    'https://picsum.photos/seed/flora-green/800/600',
+    image:    '/work/flora-co.jpg',
     colour:   '#5B21B6',
   },
   {
     title:    'Vault',
     category: 'Limited Drops',
-    image:    'https://picsum.photos/seed/vault-dark/800/600',
+    image:    '/work/vault.jpg',
     colour:   '#BE185D',
   },
 ]
