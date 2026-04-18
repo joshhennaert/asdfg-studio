@@ -8,7 +8,7 @@ const BODY_FONT    = '"EB Garamond", Garamond, Georgia, serif'
 
 function MaskWord({ word, delay }: { word: string; delay: number }) {
   return (
-    <span style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom' }}>
+    <span style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom', paddingBottom: '0.12em', marginBottom: '-0.12em' }}>
       <motion.span
         style={{ display: 'inline-block' }}
         initial={{ y: '110%' }}
