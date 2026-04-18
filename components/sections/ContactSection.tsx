@@ -64,7 +64,7 @@ export default function ContactSection() {
         <div className="pt-6">
           <ClipReveal>
             <h2 className="text-fg leading-tight" style={{ fontFamily: HEADING_FONT, fontWeight: 900, fontSize: 'clamp(22px, 3vw, 40px)', letterSpacing: '-0.02em' }}>
-              Start a conversation
+              Have a brand that feels stronger than the site behind it?
             </h2>
           </ClipReveal>
         </div>
@@ -75,8 +75,7 @@ export default function ContactSection() {
         {/* Left — info */}
         <div className="space-y-10">
           <p className="text-fg/60 leading-relaxed" style={{ fontFamily: BODY_FONT, fontSize: '18px' }}>
-            No pitch decks. Tell us what you&apos;re working on. We&apos;ll be honest
-            about whether we&apos;re the right fit.
+            Let&apos;s build a digital presence that matches it.
           </p>
 
           <div>
@@ -91,7 +90,7 @@ export default function ContactSection() {
 
           <div className="pt-6 border-t border-fg/10">
             <p className="text-fg/50" style={{ fontFamily: BODY_FONT, fontSize: '18px' }}>
-              We aim to get back to you within one business day.
+              Taking on a limited number of projects at a founding rate.
             </p>
           </div>
         </div>
@@ -152,12 +151,10 @@ export default function ContactSection() {
                 style={{ fontFamily: BODY_FONT, fontSize: '18px', color: form.service ? 'var(--fg)' : 'rgba(243,236,230,0.25)' }}
               >
                 <option value="" disabled style={{ background: '#1C1C1C', color: '#F3ECE6' }}>Select a service</option>
-                <option value="ux-audit"       style={{ background: '#1C1C1C', color: '#F3ECE6' }}>UX &amp; Conversion Audit</option>
-                <option value="store-build"    style={{ background: '#1C1C1C', color: '#F3ECE6' }}>Store Design &amp; Build</option>
-                <option value="brand-strategy" style={{ background: '#1C1C1C', color: '#F3ECE6' }}>Brand Strategy</option>
-                <option value="tcg-build"      style={{ background: '#1C1C1C', color: '#F3ECE6' }}>TCG Website Build</option>
-                <option value="retainer"       style={{ background: '#1C1C1C', color: '#F3ECE6' }}>Monthly Retainer</option>
-                <option value="general"        style={{ background: '#1C1C1C', color: '#F3ECE6' }}>General Enquiry</option>
+                <option value="flagship-sprint"      style={{ background: '#1C1C1C', color: '#F3ECE6' }}>Digital Flagship Sprint</option>
+                <option value="asset-direction-pack" style={{ background: '#1C1C1C', color: '#F3ECE6' }}>Asset Direction Pack</option>
+                <option value="page-extensions"      style={{ background: '#1C1C1C', color: '#F3ECE6' }}>Page Extensions</option>
+                <option value="general"              style={{ background: '#1C1C1C', color: '#F3ECE6' }}>General Enquiry</option>
               </select>
             </div>
 
@@ -171,7 +168,7 @@ export default function ContactSection() {
                 rows={3}
                 value={form.message}
                 onChange={e => setForm(p => ({ ...p, message: e.target.value }))}
-                placeholder="Tell us about your brand and what you need."
+                placeholder="Tell us about the brand."
                 className="w-full bg-transparent pb-3 text-fg focus:outline-none placeholder:text-fg/35 border-b border-fg/20 focus:border-fg/60 transition-colors duration-150 resize-none"
                 style={{ fontFamily: BODY_FONT, fontSize: '18px' }}
               />
@@ -204,7 +201,7 @@ export default function ContactSection() {
                 e.currentTarget.style.borderColor = '#1C1C1C'
               }}
             >
-              {loading ? 'Sending…' : 'Send message →'}
+              {loading ? 'Sending…' : 'Enquire →'}
             </button>
           </form>
         )}

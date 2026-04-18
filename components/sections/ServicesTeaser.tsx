@@ -7,100 +7,65 @@ import { DrawLine } from '@/components/ui/DrawLine'
 const HEADING_FONT = '"Neue Haas Unica", "Helvetica Neue", Arial, sans-serif'
 const BODY_FONT    = '"EB Garamond", Garamond, Georgia, serif'
 
-const PALETTE = {
-  green:  '#004225',
-  blue:   '#1D4ED8',
-  purple: '#5B21B6',
-  pink:   '#BE185D',
-  teal:   '#0F766E',
-}
-
 const CARD_TEXT  = '#F3ECE6'
 const CARD_MUTED = 'rgba(243,236,230,0.55)'
 
-// Top row — 2 featured / highest value
-const TOP_SERVICES = [
+const FEATURED_SERVICE = {
+  colour: '#004225',
+  badge: 'Founding rate',
+  title: 'Digital Flagship Sprint',
+  body: 'A concept-led redesign of the pages that shape first impression, product feel, and brand perception. Ideal for brands whose product or identity feels stronger than their current site.',
+  includes: [
+    'Visual concept direction',
+    'Page strategy',
+    'Homepage and key page design',
+    'Mobile refinement',
+    'Shopify or Framer build',
+    'Copy structure guidance',
+  ],
+  price: 'From £950',
+  priceNote: 'Founding rate',
+  cta: 'Start a project →',
+}
+
+const SUPPORT_SERVICES = [
   {
-    colour: PALETTE.green,
-    badge: 'Limited, 2 spots',
-    title: 'UX & Conversion Audit',
-    body: 'A full review of your store in five working days. Every page, every touchpoint, every drop-off. A prioritised action plan you can act on immediately.',
-    price: '£149',
-    priceNote: '£300 after launch',
-    cta: 'Book an audit →',
+    colour: '#1D4ED8',
+    title: 'Asset Direction Pack',
+    body: 'Visual direction for imagery used across the site. Ideal for brands that need stronger image selection, layout consistency, and clearer visual hierarchy.',
+    cta: 'Enquire →',
   },
   {
-    colour: PALETTE.blue,
-    badge: 'Most popular',
-    title: 'Store Design & Build',
-    body: 'Custom-built storefronts. Fast, mobile-first, conversion-engineered from the ground up. No theme hacks. Built around your brand.',
-    price: 'From £1,250',
-    priceNote: 'Scope dependent',
-    cta: 'Get in touch →',
+    colour: '#5B21B6',
+    title: 'Page Extensions',
+    body: 'Additional pages for campaigns, collections, product storytelling, and seasonal updates. Ideal for brands that need to expand the site without starting from zero.',
+    cta: 'Enquire →',
   },
 ]
 
-// Bottom row — 3 supporting
-const BOTTOM_SERVICES = [
-  {
-    colour: PALETTE.purple,
-    title: 'Brand Strategy',
-    body: 'Positioning, identity, and messaging that makes sense of who you are and what you stand for.',
-    price: 'From £800',
-    cta: 'Get in touch →',
-  },
-  {
-    colour: PALETTE.pink,
-    title: 'TCG Website Build',
-    body: 'Specialist storefronts for UK trading card game sellers. Tournament-ready, singles-optimised, collector-focused platforms.',
-    price: 'From £400',
-    cta: 'Get in touch →',
-  },
-  {
-    colour: PALETTE.teal,
-    title: 'Monthly Retainer',
-    body: 'Ongoing store management, updates, and priority access for brands that want a studio on call.',
-    price: 'From £400/mo',
-    cta: 'Get in touch →',
-  },
-]
-
-function TopCard({
-  service,
-  delay,
-}: {
-  service: typeof TOP_SERVICES[0]
-  delay: number
-}) {
+function FeaturedCard() {
+  const s = FEATURED_SERVICE
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '0px' }}
-      transition={{ duration: 0.75, delay, ease: [0.16, 1, 0.3, 1] }}
-      style={{ height: '100%' }}
+      transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
     >
-      {/* Outer bezel */}
       <div
         style={{
           background: 'rgba(28,28,28,0.06)',
           border: '1px solid rgba(28,28,28,0.1)',
           borderRadius: 22,
           padding: 3,
-          height: '100%',
         }}
       >
-        {/* Inner core */}
         <div
           style={{
-            background: service.colour,
+            background: s.colour,
             borderRadius: 19,
             boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)',
-            padding: 'clamp(20px, 4vw, 36px)',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 0,
+            padding: 'clamp(24px, 4vw, 44px)',
           }}
         >
           {/* Badge */}
@@ -114,47 +79,80 @@ function TopCard({
               color: CARD_TEXT,
               padding: '4px 12px',
               borderRadius: 9999,
-              alignSelf: 'flex-start',
-              marginBottom: 24,
-            }}
-          >
-            {service.badge}
-          </span>
-
-          {/* Title */}
-          <h3
-            style={{
-              fontFamily: HEADING_FONT,
-              fontWeight: 900,
-              fontSize: 'clamp(24px, 2.8vw, 38px)',
-              letterSpacing: '-0.025em',
-              lineHeight: 1.0,
-              color: CARD_TEXT,
-              marginBottom: 18,
-            }}
-          >
-            {service.title}
-          </h3>
-
-          {/* Body */}
-          <p
-            style={{
-              fontFamily: BODY_FONT,
-              fontSize: '17px',
-              lineHeight: 1.65,
-              color: CARD_MUTED,
-              flex: 1,
+              display: 'inline-block',
               marginBottom: 28,
             }}
           >
-            {service.body}
-          </p>
+            {s.badge}
+          </span>
+
+          {/* Two-column: title + body / includes */}
+          <div className="grid md:grid-cols-2 gap-8 md:gap-16 mb-10">
+            <div>
+              <h3
+                style={{
+                  fontFamily: HEADING_FONT,
+                  fontWeight: 900,
+                  fontSize: 'clamp(26px, 3.2vw, 46px)',
+                  letterSpacing: '-0.025em',
+                  lineHeight: 1.0,
+                  color: CARD_TEXT,
+                  marginBottom: 20,
+                }}
+              >
+                {s.title}
+              </h3>
+              <p
+                style={{
+                  fontFamily: BODY_FONT,
+                  fontSize: '17px',
+                  lineHeight: 1.65,
+                  color: CARD_MUTED,
+                }}
+              >
+                {s.body}
+              </p>
+            </div>
+
+            <div>
+              <p
+                style={{
+                  fontFamily: 'var(--font-fragment), monospace',
+                  fontSize: '10px',
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  color: CARD_MUTED,
+                  marginBottom: 16,
+                }}
+              >
+                Includes
+              </p>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                {s.includes.map((item, i) => (
+                  <li
+                    key={item}
+                    style={{
+                      fontFamily: BODY_FONT,
+                      fontSize: '16px',
+                      lineHeight: 1.5,
+                      color: CARD_MUTED,
+                      paddingTop: i > 0 ? 10 : 0,
+                      paddingBottom: 10,
+                      borderBottom: i < s.includes.length - 1 ? '1px solid rgba(243,236,230,0.1)' : 'none',
+                    }}
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
 
           {/* Price + CTA */}
           <div
             style={{
               borderTop: '1px solid rgba(243,236,230,0.12)',
-              paddingTop: 24,
+              paddingTop: 28,
               display: 'flex',
               alignItems: 'flex-end',
               justifyContent: 'space-between',
@@ -166,13 +164,13 @@ function TopCard({
                 style={{
                   fontFamily: HEADING_FONT,
                   fontWeight: 900,
-                  fontSize: 'clamp(28px, 3vw, 40px)',
+                  fontSize: 'clamp(28px, 3vw, 44px)',
                   letterSpacing: '-0.03em',
                   lineHeight: 1,
                   color: CARD_TEXT,
                 }}
               >
-                {service.price}
+                {s.price}
               </div>
               <p
                 style={{
@@ -180,19 +178,18 @@ function TopCard({
                   fontSize: '10px',
                   letterSpacing: '0.06em',
                   color: CARD_MUTED,
-                  textDecoration: service.priceNote.startsWith('£') ? 'line-through' : 'none',
                   marginTop: 5,
                 }}
               >
-                {service.priceNote}
+                {s.priceNote}
               </p>
             </div>
             <a
               href="#contact"
               className="btn-pill btn-pill-card"
-              style={{ fontSize: '13px', padding: '10px 22px', '--btn-hover-bg': service.colour } as React.CSSProperties}
+              style={{ fontSize: '13px', padding: '10px 22px', '--btn-hover-bg': s.colour } as React.CSSProperties}
             >
-              {service.cta}
+              {s.cta}
             </a>
           </div>
         </div>
@@ -201,11 +198,11 @@ function TopCard({
   )
 }
 
-function BottomCard({
+function SupportCard({
   service,
   delay,
 }: {
-  service: typeof BOTTOM_SERVICES[0]
+  service: typeof SUPPORT_SERVICES[0]
   delay: number
 }) {
   return (
@@ -216,7 +213,6 @@ function BottomCard({
       transition={{ duration: 0.75, delay, ease: [0.16, 1, 0.3, 1] }}
       style={{ height: '100%' }}
     >
-      {/* Outer bezel */}
       <div
         style={{
           background: 'rgba(28,28,28,0.06)',
@@ -226,24 +222,22 @@ function BottomCard({
           height: '100%',
         }}
       >
-        {/* Inner core */}
         <div
           style={{
             background: service.colour,
             borderRadius: 19,
             boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08)',
-            padding: 'clamp(16px, 3.5vw, 28px)',
+            padding: 'clamp(20px, 3.5vw, 32px)',
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
-            gap: 0,
           }}
         >
           <h3
             style={{
               fontFamily: HEADING_FONT,
               fontWeight: 900,
-              fontSize: 'clamp(20px, 2vw, 26px)',
+              fontSize: 'clamp(20px, 2.2vw, 30px)',
               letterSpacing: '-0.02em',
               lineHeight: 1.05,
               color: CARD_TEXT,
@@ -269,24 +263,9 @@ function BottomCard({
           <div
             style={{
               borderTop: '1px solid rgba(243,236,230,0.12)',
-              paddingTop: 18,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: 12,
+              paddingTop: 20,
             }}
           >
-            <span
-              style={{
-                fontFamily: HEADING_FONT,
-                fontWeight: 700,
-                fontSize: '18px',
-                letterSpacing: '-0.01em',
-                color: CARD_TEXT,
-              }}
-            >
-              {service.price}
-            </span>
             <a
               href="#contact"
               className="btn-pill btn-pill-card"
@@ -330,17 +309,15 @@ export default function ServicesTeaser() {
           </div>
         </div>
 
-        {/* Top row — 2 featured */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-          {TOP_SERVICES.map((s, i) => (
-            <TopCard key={s.title} service={s} delay={i * 0.08} />
-          ))}
+        {/* Featured service */}
+        <div className="mb-4">
+          <FeaturedCard />
         </div>
 
-        {/* Bottom row — 3 supporting */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
-          {BOTTOM_SERVICES.map((s, i) => (
-            <BottomCard key={s.title} service={s} delay={0.1 + i * 0.07} />
+        {/* Support services */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+          {SUPPORT_SERVICES.map((s, i) => (
+            <SupportCard key={s.title} service={s} delay={i * 0.08} />
           ))}
         </div>
 
@@ -350,10 +327,10 @@ export default function ServicesTeaser() {
           style={{ borderTop: '1px solid var(--border)', paddingTop: 32 }}
         >
           <p style={{ fontFamily: BODY_FONT, fontSize: '18px', color: 'var(--muted)', maxWidth: 480 }}>
-            Not sure what you need? Drop us a message and we&apos;ll point you in the right direction.
+            Not sure where to start? Tell us about the brand and we&apos;ll figure it out.
           </p>
           <a href="#contact" className="btn-pill flex-shrink-0">
-            Get in touch →
+            Enquire →
           </a>
         </div>
 

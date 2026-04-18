@@ -16,9 +16,9 @@ const C = {
 
 const FACTS = [
   ['Based',        'United Kingdom'],
-  ['Reach',        'UK & global'],
+  ['Focus',        'Fashion & Wellness'],
   ['Availability', 'Now open'],
-  ['Approach',     'By conversation'],
+  ['Approach',     'Concept-led'],
 ]
 
 export default function AboutSection() {
@@ -69,7 +69,7 @@ export default function AboutSection() {
               color: C.text,
             }}
           >
-            We work with fewer<br />clients on purpose.
+            asdfg.studio is built around<br />the idea that a brand&apos;s digital<br />presence should feel as intentional<br />as the product itself.
           </p>
         </motion.div>
 
@@ -85,9 +85,7 @@ export default function AboutSection() {
             transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
             style={{ fontFamily: BODY_FONT, fontSize: '18px', lineHeight: 1.7, color: C.soft }}
           >
-            No pitch decks, no discovery treadmills. We have an honest conversation
-            about whether we&apos;re the right fit. We&apos;re comfortable saying
-            no when we&apos;re not.
+            The studio is shaped by spontaneity, experimentation, and self-expression, balanced by a clean, tasteful, and restrained approach.
           </motion.p>
 
           <motion.p
@@ -97,8 +95,7 @@ export default function AboutSection() {
             transition={{ duration: 0.75, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
             style={{ fontFamily: BODY_FONT, fontSize: '18px', lineHeight: 1.7, color: C.muted }}
           >
-            Beautiful work that doesn&apos;t convert is decoration. We design for
-            clarity first. Trust is earned in seconds and lost just as fast.
+            It focuses on concept-led web design for fashion and selected wellness brands, combining visual thinking, direction, and execution into a tighter, more useful process.
           </motion.p>
         </div>
 
@@ -150,7 +147,7 @@ export default function AboutSection() {
             viewport={{ once: true, margin: '0px' }}
             transition={{ duration: 0.5, delay: 0.25 }}
           >
-            Work with us →
+            Start a project →
           </motion.a>
         </div>
 

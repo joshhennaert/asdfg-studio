@@ -58,9 +58,21 @@ export default function WorkTeaser() {
                 color: C.text,
               }}
             >
-              Selected work
+              Selected work and concept pieces
             </h2>
           </ClipReveal>
+          <p
+            style={{
+              fontFamily: '"EB Garamond", Garamond, Georgia, serif',
+              fontSize: '17px',
+              lineHeight: 1.6,
+              color: C.muted,
+              marginTop: 12,
+              maxWidth: 480,
+            }}
+          >
+            A look at pages, systems, and visual directions designed to make brands feel more distinctive online.
+          </p>
           <a
             href="/work"
             className="btn-pill hidden md:inline-flex flex-shrink-0"
