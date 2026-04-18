@@ -15,10 +15,9 @@ const C = {
 }
 
 const FACTS = [
-  ['Based',        'United Kingdom'],
-  ['Focus',        'Fashion & Wellness'],
-  ['Availability', 'Now open'],
-  ['Approach',     'Concept-led'],
+  ['Focus',    'Fashion & Wellness'],
+  ['Approach', 'Concept-led'],
+  ['Reach',    'Remote, worldwide'],
 ]
 
 export default function AboutSection() {

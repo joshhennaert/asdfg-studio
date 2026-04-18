@@ -50,7 +50,7 @@ export default function HeroSection() {
           style={{
             fontFamily: HEADING_FONT,
             fontWeight: 900,
-            fontSize: 'clamp(36px, 11vw, 200px)',
+            fontSize: 'clamp(32px, 7.5vw, 120px)',
             letterSpacing: '-0.035em',
             lineHeight: 0.87,
             color: '#F3ECE6',
